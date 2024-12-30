@@ -21,3 +21,5 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+// Create a serverless function handler
+module.exports.handler = serverless(app); // Export as serverless function
