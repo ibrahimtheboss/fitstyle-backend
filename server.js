@@ -18,13 +18,5 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads'))); // Serve u
 // Routes
 app.use('/api/products', productRoutes);
 
-// Start server for local development
-if (process.env.NODE_ENV !== 'production') {
-  const PORT = process.env.PORT || 5000;
-  app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-  });
-}
-
-// Export as a serverless function for Vercel
-module.exports.handler = serverless(app); // Export as a serverless function
+// Export the app wrapped in serverless-http
+module.exports.handler = serverless(app);
