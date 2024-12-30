@@ -3,6 +3,8 @@ const connectDB = require('./config/db');
 const productRoutes = require('./routes/productRoutes');
 const cors = require('cors');
 const path = require('path');
+const serverless = require('serverless-http'); // Import serverless-http for serverless deployment
+
 const app = express();
 
 // Connect to MongoDB
@@ -16,10 +18,13 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads'))); // Serve u
 // Routes
 app.use('/api/products', productRoutes);
 
-// Start server
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
-// Create a serverless function handler
-module.exports.handler = serverless(app); // Export as serverless function
+// Start server for local development
+if (process.env.NODE_ENV !== 'production') {
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+}
+
+// Export as a serverless function for Vercel
+module.exports.handler = serverless(app); // Export as a serverless function
