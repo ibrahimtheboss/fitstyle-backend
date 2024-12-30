@@ -56,8 +56,8 @@ if (process.env.NODE_ENV === 'production') {
   // For serverless environments like Vercel or AWS Lambda
   module.exports.handler = serverless(app); // Export as a serverless function
 } else {
-  // For local development
-  const PORT = process.env.PORT || 5000;
+  // For local development and Render, use the PORT environment variable
+  const PORT = process.env.PORT || 5000; // Render sets this environment variable
   app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
   });
